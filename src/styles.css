@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0e0d0b;
+  --color-surface: #161410;
+  --color-raised: #1c1915;
+  --color-fg: #f2ebe3;
+  --color-muted: #9a9086;
+  --color-faint: #6e675f;
+  --color-accent: #d4c4b0;
+  --color-border: color-mix(in oklab, #f2ebe3 12%, transparent);
+  --color-line: color-mix(in oklab, #f2ebe3 10%, transparent);
+
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  --text-display: clamp(3.25rem, 11vw, 8rem);
+  --text-title: clamp(2rem, 5vw, 3.75rem);
+  --text-section: clamp(1.5rem, 3vw, 2.25rem);
+
+  --shadow-card: 0 0 0 1px color-mix(in oklab, #f2ebe3 10%, transparent);
+  --shadow-card-hover: 0 0 0 1px color-mix(in oklab, #f2ebe3 22%, transparent);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    font-family: var(--font-serif);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-weight: 400;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img {
+    outline: 1px solid color-mix(in oklab, var(--color-fg) 10%, transparent);
+    outline-offset: -1px;
+  }
+}
+
+@layer utilities {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .aspect-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  .aspect-wide {
+    aspect-ratio: 16 / 10;
+  }
+
+  .aspect-hero {
+    aspect-ratio: 16 / 9;
+  }
+
+  .enter {
+    animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .enter-1 {
+    animation-delay: 40ms;
+  }
+  .enter-2 {
+    animation-delay: 120ms;
+  }
+  .enter-3 {
+    animation-delay: 200ms;
+  }
+  .enter-4 {
+    animation-delay: 280ms;
+  }
+  .enter-5 {
+    animation-delay: 360ms;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
