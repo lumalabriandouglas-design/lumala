@@ -139,6 +139,51 @@ export const WORK: Project[] = [
     ],
     cover: "/work/stock.jpg",
     coverAlt: "Wooden stockroom shelves, a leather ledger, and warm shop light",
+  },  {
+    slug: "kwaya",
+    index: "06",
+    title: "Kwaya",
+    kicker: "Choir player",
+    year: "2026",
+    category: "culture",
+    location: "Uganda",
+    summary:
+      "One player for the Anglican choirs of Uganda. Choir profiles, and the hymns they own — on the web and on Android.",
+    story: [
+      "Kwaya is where a choir keeps its sound. Each choir has a profile and the hymns it has recorded, and one player carries them from the first verse to the last.",
+      "The choir uploads from a private vestry. The congregation listens on the web, or in the Android app on the way to Sunday service.",
+    ],
+    features: [
+      "Choir profiles and their hymns",
+      "One player, web and Android",
+      "Private vestry for uploads",
+    ],
+    cover: "/work/kwaya.jpg",
+    coverAlt: "Open hymnal, sheet music, and a phone on a carved choir stall in warm church light",
+    live: "https://kwaya.vercel.app",
+  },
+  {
+    slug: "plan",
+    index: "07",
+    title: "PLAN",
+    kicker: "Goal date",
+    year: "2026",
+    category: "desk",
+    location: "Uganda",
+    summary:
+      "A goal date for messy pay. Savings, debts, and a new date when you overspend.",
+    story: [
+      "PLAN is for money that arrives daily, weekly, or whenever the hustle pays. Tell it the pattern, not the best week, and it gives you one goal and a date.",
+      "Debts eat the plan before the goal does, so they sit in it too. Overspend, and it does not scold — it moves the date.",
+    ],
+    features: [
+      "Daily, weekly, or mixed pay",
+      "Savings goal and debts",
+      "A new date when you overspend",
+    ],
+    cover: "/work/plan.jpg",
+    coverAlt: "Pocket planner with a circled date, banknotes, and coins on a dark oak desk",
+    live: "https://plan-rho-jade.vercel.app",
   },
 ];
 
