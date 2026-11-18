@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowDown } from "lucide-react";
+import { AppCard } from "@/components/app-download";
 import { ProjectCard } from "@/components/project-card";
+import { APPS } from "@/data/apps";
 import { SITE } from "@/data/site";
-import {
-  CATEGORIES,
-  CATEGORY_LABEL,
-  WORK,
-  type Category,
-} from "@/data/work";
+import { CATEGORIES, CATEGORY_LABEL, WORK, type Category } from "@/data/work";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({ component: Home });
@@ -33,8 +30,7 @@ const APPROACH = [
 
 function Home() {
   const [filter, setFilter] = useState<Category | "all">("all");
-  const projects =
-    filter === "all" ? WORK : WORK.filter((p) => p.category === filter);
+  const projects = filter === "all" ? WORK : WORK.filter((p) => p.category === filter);
   const featured = filter === "all" ? projects[0] : undefined;
   const rest = featured ? projects.slice(1) : projects;
 
@@ -48,8 +44,7 @@ function Home() {
           {SITE.fullName}
         </h1>
         <p className="enter enter-3 mt-6 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
-          {SITE.tagline} Selected work from the last season — maisons, desks,
-          and a hymnal.
+          {SITE.tagline} Selected work from the last season — maisons, desks, and a hymnal.
         </p>
         <div className="enter enter-4 mt-8 flex flex-wrap gap-3">
           <a
@@ -59,6 +54,12 @@ function Home() {
             Selected work
             <ArrowDown className="size-4" strokeWidth={1.5} />
           </a>
+          <Link
+            to="/apps"
+            className="inline-flex min-h-11 items-center rounded-full px-5 text-sm text-muted shadow-card transition-colors duration-150 hover:text-fg hover:shadow-card-hover"
+          >
+            Android apps
+          </Link>
           <Link
             to="/about"
             className="inline-flex min-h-11 items-center rounded-full px-5 text-sm text-muted shadow-card transition-colors duration-150 hover:text-fg hover:shadow-card-hover"
@@ -84,23 +85,12 @@ function Home() {
             <p className="eyebrow">Index</p>
             <h2 className="mt-3 font-serif text-title text-fg">Selected work</h2>
           </div>
-          <div
-            className="flex flex-wrap gap-2"
-            role="tablist"
-            aria-label="Filter work"
-          >
-            <FilterChip
-              active={filter === "all"}
-              onClick={() => setFilter("all")}
-            >
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter work">
+            <FilterChip active={filter === "all"} onClick={() => setFilter("all")}>
               All
             </FilterChip>
             {CATEGORIES.map((cat) => (
-              <FilterChip
-                key={cat}
-                active={filter === cat}
-                onClick={() => setFilter(cat)}
-              >
+              <FilterChip key={cat} active={filter === cat} onClick={() => setFilter(cat)}>
                 {CATEGORY_LABEL[cat]}
               </FilterChip>
             ))}
@@ -109,23 +99,37 @@ function Home() {
 
         <div className="mt-10 grid gap-4 md:grid-cols-12 md:gap-5">
           {featured ? (
-            <ProjectCard
-              project={featured}
-              featured
-              className="md:col-span-12 lg:col-span-7"
-            />
+            <ProjectCard project={featured} featured className="md:col-span-12 lg:col-span-7" />
           ) : null}
           {rest.map((project, i) => (
             <ProjectCard
               key={project.slug}
               project={project}
-              className={cn(
-                featured && i === 0
-                  ? "md:col-span-12 lg:col-span-5"
-                  : "md:col-span-6",
-              )}
+              className={cn(featured && i === 0 ? "md:col-span-12 lg:col-span-5" : "md:col-span-6")}
             />
           ))}
+        </div>
+      </section>
+
+      <section id="apps" className="scroll-mt-16 border-t border-line">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-24">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="eyebrow">Android</p>
+              <h2 className="mt-3 font-serif text-title text-fg">Apps</h2>
+            </div>
+            <Link
+              to="/apps"
+              className="inline-flex min-h-11 items-center text-sm text-accent hover:text-fg"
+            >
+              All downloads
+            </Link>
+          </div>
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            {APPS.map((app) => (
+              <AppCard key={app.slug} app={app} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -153,9 +157,9 @@ function Home() {
             <p className="eyebrow">The floor</p>
             <h2 className="mt-3 font-serif text-title text-fg">{SITE.fullName}</h2>
             <p className="mt-6 max-w-md text-sm leading-relaxed text-muted sm:text-base">
-              Designer and builder in Kampala. The work sits between the atelier
-              and the desk — showrooms for makers, estimate paper for
-              independents, a hymnal a congregation can actually search.
+              Designer and builder in Kampala. The work sits between the atelier and the desk —
+              showrooms for makers, estimate paper for independents, a hymnal a congregation can
+              actually search.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 lg:justify-end">
@@ -189,9 +193,7 @@ function FilterChip({
       onClick={onClick}
       className={cn(
         "inline-flex min-h-11 items-center rounded-full px-4 text-sm transition-[color,background-color,box-shadow] duration-150",
-        active
-          ? "bg-accent font-medium text-bg"
-          : "text-muted shadow-card hover:text-fg",
+        active ? "bg-accent font-medium text-bg" : "text-muted shadow-card hover:text-fg",
       )}
     >
       {children}

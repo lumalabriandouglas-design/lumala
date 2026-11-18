@@ -15,6 +15,9 @@ export function SiteFooter() {
           <Link to="/" className="inline-flex min-h-11 items-center hover:text-fg">
             Work
           </Link>
+          <Link to="/apps" className="inline-flex min-h-11 items-center hover:text-fg">
+            Apps
+          </Link>
           <Link to="/about" className="inline-flex min-h-11 items-center hover:text-fg">
             About
           </Link>

@@ -1,0 +1,20 @@
+{
+  "hymnsync": {
+    "name": "Anglican Hymn Sync",
+    "packageId": "com.lumala.anglicanhymnsync",
+    "versionName": "1.0.0",
+    "versionCode": 6,
+    "apkUrl": "https://lumala.vercel.app/downloads/hymnsync.apk",
+    "playUrl": "https://play.google.com/store/apps/details?id=com.lumala.anglicanhymnsync",
+    "playEnabled": true
+  },
+  "kwaya": {
+    "name": "Kwaya: Anglican Choirs",
+    "packageId": "com.kwaya.kwaya",
+    "versionName": "1.0.0",
+    "versionCode": 5,
+    "apkUrl": "https://lumala.vercel.app/downloads/kwaya.apk",
+    "playUrl": "https://play.google.com/store/apps/details?id=com.kwaya.kwaya",
+    "playEnabled": false
+  }
+}

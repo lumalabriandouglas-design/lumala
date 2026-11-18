@@ -1,14 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { APPS } from "@/data/apps";
 import { SITE } from "@/data/site";
-import {
-  adjacentWork,
-  CATEGORY_LABEL,
-  getWork,
-} from "@/data/work";
+import { adjacentWork, CATEGORY_LABEL, getWork, type Project } from "@/data/work";
 
 export const Route = createFileRoute("/work/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { project: Project; prev?: Project; next?: Project } => {
     const project = getWork(params.slug);
     if (!project) throw notFound();
     return { project, ...adjacentWork(params.slug) };
@@ -17,16 +14,16 @@ export const Route = createFileRoute("/work/$slug")({
   head: ({ loaderData }) => ({
     meta: [
       {
-        title: loaderData
-          ? `${loaderData.project.title} — ${SITE.name}`
-          : SITE.name,
+        title: loaderData ? `${loaderData.project.title} — ${SITE.name}` : SITE.name,
       },
     ],
   }),
 });
 
 function WorkPage() {
-  const { project, prev, next } = Route.useLoaderData();
+  const { project, prev, next }: { project: Project; prev?: Project; next?: Project } =
+    Route.useLoaderData();
+  const appListing = APPS.find((app) => app.workSlug === project.slug);
 
   return (
     <main>
@@ -42,23 +39,31 @@ function WorkPage() {
           <p className="eyebrow mt-8">
             {project.index} · {CATEGORY_LABEL[project.category]} · {project.year}
           </p>
-          <h1 className="mt-4 font-serif text-display leading-none text-fg">
-            {project.title}
-          </h1>
+          <h1 className="mt-4 font-serif text-display leading-none text-fg">{project.title}</h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
             {project.summary}
           </p>
-          {project.live ? (
-            <div className="mt-8">
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-bg transition-transform duration-150 ease-out active:scale-95"
-              >
-                Open
-                <ArrowUpRight className="size-4" strokeWidth={1.5} />
-              </a>
+          {project.live || appListing ? (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {project.live ? (
+                <a
+                  href={project.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-bg transition-transform duration-150 ease-out active:scale-95"
+                >
+                  Open
+                  <ArrowUpRight className="size-4" strokeWidth={1.5} />
+                </a>
+              ) : null}
+              {appListing ? (
+                <Link
+                  to={appListing.slug === "kwaya" ? "/apps/kwaya" : "/apps/hymnsync"}
+                  className="inline-flex min-h-11 items-center rounded-full px-5 text-sm text-muted shadow-card transition-colors duration-150 hover:text-fg hover:shadow-card-hover"
+                >
+                  Download Android app
+                </Link>
+              ) : null}
             </div>
           ) : null}
         </header>
