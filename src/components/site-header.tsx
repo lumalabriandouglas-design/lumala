@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/", label: "Work" },
+  { to: "/apps", label: "Apps" },
   { to: "/about", label: "About" },
 ] as const;
 
@@ -29,7 +30,9 @@ export function SiteHeader() {
             const active =
               item.to === "/"
                 ? pathname === "/" || pathname.startsWith("/work")
-                : pathname === item.to;
+                : item.to === "/apps"
+                  ? pathname === "/apps" || pathname.startsWith("/apps/")
+                  : pathname === item.to;
             return (
               <Link
                 key={item.label}
@@ -52,15 +55,16 @@ export function SiteHeader() {
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X className="size-5" strokeWidth={1.5} /> : <Menu className="size-5" strokeWidth={1.5} />}
+          {open ? (
+            <X className="size-5" strokeWidth={1.5} />
+          ) : (
+            <Menu className="size-5" strokeWidth={1.5} />
+          )}
         </button>
       </div>
 
       {open ? (
-        <nav
-          className="border-t border-line px-5 py-4 sm:hidden"
-          aria-label="Mobile"
-        >
+        <nav className="border-t border-line px-5 py-4 sm:hidden" aria-label="Mobile">
           <ul className="flex flex-col">
             {NAV.map((item) => (
               <li key={item.label}>

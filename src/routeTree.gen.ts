@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AppsRouteImport } from './routes/apps'
+import { Route as AppsIndexRouteImport } from './routes/apps.index'
+import { Route as AppsHymnsyncRouteImport } from './routes/apps.hymnsync'
+import { Route as AppsKwayaRouteImport } from './routes/apps.kwaya'
 import { Route as WorkSlugRouteImport } from './routes/work.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +27,26 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppsRoute = AppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsIndexRoute = AppsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppsRoute,
+} as any)
+const AppsHymnsyncRoute = AppsHymnsyncRouteImport.update({
+  id: '/hymnsync',
+  path: '/hymnsync',
+  getParentRoute: () => AppsRoute,
+} as any)
+const AppsKwayaRoute = AppsKwayaRouteImport.update({
+  id: '/kwaya',
+  path: '/kwaya',
+  getParentRoute: () => AppsRoute,
+} as any)
 const WorkSlugRoute = WorkSlugRouteImport.update({
   id: '/work/$slug',
   path: '/work/$slug',
@@ -32,30 +56,58 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/apps': typeof AppsRouteWithChildren
+  '/apps/hymnsync': typeof AppsHymnsyncRoute
+  '/apps/kwaya': typeof AppsKwayaRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/apps/': typeof AppsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/apps/hymnsync': typeof AppsHymnsyncRoute
+  '/apps/kwaya': typeof AppsKwayaRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/apps': typeof AppsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/apps': typeof AppsRouteWithChildren
+  '/apps/hymnsync': typeof AppsHymnsyncRoute
+  '/apps/kwaya': typeof AppsKwayaRoute
   '/work/$slug': typeof WorkSlugRoute
+  '/apps/': typeof AppsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/work/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/apps'
+    | '/apps/hymnsync'
+    | '/apps/kwaya'
+    | '/work/$slug'
+    | '/apps/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/work/$slug'
-  id: '__root__' | '/' | '/about' | '/work/$slug'
+  to:
+    '/' | '/about' | '/apps/hymnsync' | '/apps/kwaya' | '/work/$slug' | '/apps'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/apps'
+    | '/apps/hymnsync'
+    | '/apps/kwaya'
+    | '/work/$slug'
+    | '/apps/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AppsRoute: typeof AppsRouteWithChildren
   WorkSlugRoute: typeof WorkSlugRoute
 }
 
@@ -75,6 +127,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/apps': {
+      id: '/apps'
+      path: '/apps'
+      fullPath: '/apps'
+      preLoaderRoute: typeof AppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apps/': {
+      id: '/apps/'
+      path: '/'
+      fullPath: '/apps/'
+      preLoaderRoute: typeof AppsIndexRouteImport
+      parentRoute: typeof AppsRoute
+    }
+    '/apps/hymnsync': {
+      id: '/apps/hymnsync'
+      path: '/hymnsync'
+      fullPath: '/apps/hymnsync'
+      preLoaderRoute: typeof AppsHymnsyncRouteImport
+      parentRoute: typeof AppsRoute
+    }
+    '/apps/kwaya': {
+      id: '/apps/kwaya'
+      path: '/kwaya'
+      fullPath: '/apps/kwaya'
+      preLoaderRoute: typeof AppsKwayaRouteImport
+      parentRoute: typeof AppsRoute
+    }
     '/work/$slug': {
       id: '/work/$slug'
       path: '/work/$slug'
@@ -85,20 +165,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppsRouteChildren {
+  AppsHymnsyncRoute: typeof AppsHymnsyncRoute
+  AppsKwayaRoute: typeof AppsKwayaRoute
+  AppsIndexRoute: typeof AppsIndexRoute
+}
+
+const AppsRouteChildren: AppsRouteChildren = {
+  AppsHymnsyncRoute: AppsHymnsyncRoute,
+  AppsKwayaRoute: AppsKwayaRoute,
+  AppsIndexRoute: AppsIndexRoute,
+}
+
+const AppsRouteWithChildren = AppsRoute._addFileChildren(AppsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AppsRoute: AppsRouteWithChildren,
   WorkSlugRoute: WorkSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
