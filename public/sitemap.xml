@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://lumala.vercel.app/</loc></url>
   <url><loc>https://lumala.vercel.app/about</loc></url>
+  <url><loc>https://lumala.vercel.app/apps</loc></url>
+  <url><loc>https://lumala.vercel.app/apps/hymnsync</loc></url>
+  <url><loc>https://lumala.vercel.app/apps/kwaya</loc></url>
   <url><loc>https://lumala.vercel.app/work/drape-collective</loc></url>
   <url><loc>https://lumala.vercel.app/work/binti-designs</loc></url>
   <url><loc>https://lumala.vercel.app/work/meridian</loc></url>
